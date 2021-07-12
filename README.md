@@ -1,3 +1,2 @@
-# Fortgeschrittene Algorithmen und Datenstrukturen  
-# (Programmieren C++)  
+#C23 Fortgeschrittene Algorithmen und Programmierung
 Lösungen zu den Laboraufgaben.
