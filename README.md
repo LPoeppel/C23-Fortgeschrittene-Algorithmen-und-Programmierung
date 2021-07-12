@@ -1,2 +1,2 @@
-# Fortgeschrittene Algorithmen und Datenstrukturen (Programmieren C++)
+# Fortgeschrittene Algorithmen und Datenstrukturen  (Programmieren C++)
 Lösungen zu den Laboraufgaben.
