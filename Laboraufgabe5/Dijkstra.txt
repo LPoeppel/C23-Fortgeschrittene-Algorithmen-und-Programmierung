@@ -1,0 +1,49 @@
+
+		std::map<Node*, double> distance;
+		std::map<const Node*, Node*> previous;
+		std::vector<Edge*> route;
+		std::set<Node*> nSet;
+		double newDistance;
+
+		//iteriert durch liste m_nodes und fügt Nodes hinzu
+		for (Node* nTarget : m_nodes){
+			previous[nTarget] = NULL;
+			nSet.insert(nTarget);
+			if (nTarget == &rSrcNode)	{distance[nTarget] = 0;}
+			else { distance[nTarget] = std::numeric_limits<double>::max(); }
+		}
+
+		while (!nSet.empty()){
+			//vergleicht Distanzen
+			Node* nCheck = *nSet.begin();
+			for (Node* nTarget : nSet){
+				if (distance.find(nTarget)->second < distance.find(nCheck)->second){	nCheck = nTarget;}
+			}
+			//entfernt nCheck aus nSet und als erforscht
+			nSet.erase(nCheck);
+			// für jede Nachbar Node von nCheck zu nTarget
+			for (Edge* nNeighbour : m_edges){
+				Node* nTarget = &nNeighbour->getDstNode();
+				if (&nNeighbour->getSrcNode() == nCheck){
+					newDistance = distance.find(nCheck)->second + nNeighbour->getWeight();
+					if (newDistance < distance.find(nTarget)->second){
+						distance.find(nTarget)->second = newDistance;
+						previous.find(nTarget)->second = nCheck;
+					}
+				}
+			}
+		}
+		//Sortierung des Pfades
+		//sucht nach Zielnode
+		const Node* way = &rDstNode;
+		while (way != &rSrcNode){
+			std::list<Edge*> inEdges = previous.find(way)->second->getOutEdges();
+			for (Edge* sortIn : inEdges){
+				if (&sortIn->getDstNode() == way){
+					rPath.push_front(sortIn);
+					break;
+				}
+			}
+			way = previous.find(way)->second;
+		}
+}
